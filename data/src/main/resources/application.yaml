@@ -1,0 +1,6 @@
+spring:
+  liquibase:
+  datasource:
+  jpa:
+  logging:
+  sql:
