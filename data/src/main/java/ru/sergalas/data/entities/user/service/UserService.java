@@ -8,5 +8,5 @@ import ru.sergalas.data.entities.user.entity.User;
 
 public interface UserService {
     public UserResponseData getUserByUserName(String username);
-    public UserResponseData createUser(UserRequestData data) throws BindException;
+    public UserResponseData createUser(UserRequestData data);
 }

@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseData createUser(UserRequestData data) throws BindException {
+    public UserResponseData createUser(UserRequestData data) {
 
         User user = userMapper.toEntity(data);
         return userMapper.toData(userRepository.save(user));

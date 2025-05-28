@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.*;
-import ru.sergalas.data.anotation.ValidateBindingResult;
+import ru.sergalas.data.anatation.ValidateBindingResult;
 import ru.sergalas.data.entities.user.data.UserRequestData;
 import ru.sergalas.data.entities.user.data.UserRequestFindData;
 import ru.sergalas.data.entities.user.service.UserService;
@@ -22,7 +22,7 @@ public class UserController {
     @PostMapping("create")
     @ValidateBindingResult
     public ResponseEntity<ResponsePayload> createUser(@Valid @RequestBody UserRequestData data) {
-        try {
+
             return new ResponseEntity<>(
                     new ResponsePayload(
                             HttpStatus.CREATED.value(),
@@ -30,16 +30,7 @@ public class UserController {
                     ),
                     HttpStatus.CREATED
             );
-        }catch (BindException e) {
-            return new ResponseEntity<>(
-                new ResponsePayload(
-                    HttpStatus.BAD_REQUEST.value(),
-                    e,
-                    UserController.class.toString() + ": createUser"
-                ),
-                HttpStatus.BAD_REQUEST
-            );
-        }
+
 
     }
 
