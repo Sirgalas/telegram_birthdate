@@ -4,13 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.sergalas.data.web.data.ResponseData;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserResponseData implements ResponseData {
-    private Long id;
+public class UserRequestFindData {
+    @NotBlank
     private String username;
-    private String password;
 }

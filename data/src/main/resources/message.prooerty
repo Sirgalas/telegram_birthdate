@@ -1,7 +1,10 @@
 user.firstname.size.error = Имя не должно содержать менее {min} и более {max} символов
 user.lastname.size.error = Фамилия не должно содержать менее {min} и более {max} символов
 user.patronymic.size.error = Отчество не должно содержать менее {min} и более {max} символов
+user.not_found.error = Пользователь не найден
 
 date_periodicity.size.error = размер даты для периодичности должен быть 5 знаков
 date_periodicity.not_blank.error = дата не должна быть пустая
 date_periodicity.patter.error = Неверный формат даты. Ожидается формат dd.MM
+
+
