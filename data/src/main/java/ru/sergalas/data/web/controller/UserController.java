@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.sergalas.data.anatation.ValidateBindingResult;
 import ru.sergalas.data.entities.user.data.UserRequestData;
@@ -21,7 +22,7 @@ public class UserController {
 
     @PostMapping("create")
     @ValidateBindingResult
-    public ResponseEntity<ResponsePayload> createUser(@Valid @RequestBody UserRequestData data) {
+    public ResponseEntity<ResponsePayload> createUser(@Valid @RequestBody UserRequestData data, BindingResult bindingResult) {
 
             return new ResponseEntity<>(
                     new ResponsePayload(
@@ -36,8 +37,7 @@ public class UserController {
 
     @PostMapping("find")
     @ValidateBindingResult
-    public ResponseEntity<ResponsePayload> findUser(@Valid @RequestBody UserRequestFindData data) throws BindException {
-
+    public ResponseEntity<ResponsePayload> findUser(@Valid @RequestBody UserRequestFindData data, BindingResult bindingResult) {
             return new ResponseEntity<>(
                     new ResponsePayload(
                             HttpStatus.OK.value(),

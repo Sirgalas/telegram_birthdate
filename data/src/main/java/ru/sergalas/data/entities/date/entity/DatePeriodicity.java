@@ -24,6 +24,7 @@ public class DatePeriodicity {
     UUID id;
 
     private String date;
+
     @OneToMany(mappedBy = "datePeriodicity", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     List<Participant> participants;
 

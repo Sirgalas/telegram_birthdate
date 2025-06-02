@@ -7,4 +7,8 @@ date_periodicity.size.error = размер даты для периодично�
 date_periodicity.not_blank.error = дата не должна быть пустая
 date_periodicity.patter.error = Неверный формат даты. Ожидается формат dd.MM
 
+participant.not_found = Не найден участник;
+
+date.size.error = размер даты 5 символов
+
 
