@@ -4,6 +4,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.sergalas.data.entities.participant.mapper.ParticipantMapper;
+import ru.sergalas.data.entities.periodicity.mapper.PeriodicityMapper;
 import ru.sergalas.data.entities.user.mapper.UserMapper;
 
 @Configuration
@@ -13,4 +14,7 @@ public class MapperBean {
 
     @Bean
     ParticipantMapper participantMapper() {return Mappers.getMapper(ParticipantMapper.class);}
+
+    @Bean
+    PeriodicityMapper periodicityMapper() {return Mappers.getMapper(PeriodicityMapper.class);}
 }

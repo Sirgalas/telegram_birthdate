@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sergalas.data.entities.date.entity.DatePeriodicity;
 import ru.sergalas.data.entities.date.repository.DatePeriodicityRepository;
+import ru.sergalas.data.entities.date.service.DatePeriodicityService;
+import ru.sergalas.data.entities.participant.data.ListResponsePayload;
 import ru.sergalas.data.entities.participant.data.ParticipantRequestCreatePayload;
 import ru.sergalas.data.entities.participant.data.ParticipantRequestUpdatePayload;
 import ru.sergalas.data.entities.participant.data.ParticipantResponsePayload;
@@ -22,31 +24,35 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final ParticipantRepository participantRepository;
     private final DatePeriodicityRepository dateRepository;
     private final ParticipantMapper mapper;
+    private DatePeriodicityService datePeriodicityService;
 
     @Override
     public ParticipantResponsePayload create(ParticipantRequestCreatePayload payload) {
         Participant participant = mapper.toEntity(payload);
-        participant.setDatePeriodicity(getDatePeriodicity(payload.date()));
+        participant.setDatePeriodicity(datePeriodicityService.getDatePeriodicity(payload.date()));
         return mapper.toData(participantRepository.save(participant));
     }
 
     @Override
-    public Participant update(ParticipantRequestUpdatePayload payload) throws ParticipantNotFoundException {
+    public Participant update(ParticipantRequestUpdatePayload payload, UUID id) throws ParticipantNotFoundException {
 
-        Participant participant = participantRepository.findById(payload.id()).orElseThrow(() -> new ParticipantNotFoundException("{participant.not_found}"));
+        Participant participant = participantRepository.findById(id).orElseThrow(() -> new ParticipantNotFoundException("{participant.not_found}"));
         mapper.update(participant, payload);
-        participant.setDatePeriodicity(getDatePeriodicity(payload.date()));
+        participant.setDatePeriodicity(datePeriodicityService.getDatePeriodicity(payload.date()));
         return participantRepository.save(participant);
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(String id) throws ParticipantNotFoundException {
         Participant participant = participantRepository.findById(UUID.fromString(id)).orElseThrow(() -> new ParticipantNotFoundException("{participant.not_found}"));
+        participantRepository.delete(participant);
     }
 
     @Override
-    public ParticipantResponsePayload getByDate(String date) {
-        return mapper.toData(participantRepository.getParticipantByDate(date).orElse(null));
+    public ListResponsePayload getByDate(String date) {
+        return new ListResponsePayload(
+            participantRepository.getParticipantByDate(date).stream().map(mapper::toData).toList()
+        );
     }
 
     private DatePeriodicity getDatePeriodicity(String date) {

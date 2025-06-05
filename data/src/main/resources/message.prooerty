@@ -9,6 +9,8 @@ date_periodicity.patter.error = Неверный формат даты. Ожид
 
 participant.not_found = Не найден участник;
 
+periodicity.error.not_found = Не найдено событие
+
 date.size.error = размер даты 5 символов
 
 

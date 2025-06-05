@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import ru.sergalas.data.entities.participant.entity.Participant;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,7 +13,8 @@ public interface ParticipantRepository extends JpaRepository<Participant, UUID> 
     @Query(value = """
         SELECT *
         FROM participant
-        INNER JOIN date_periodicity on date_periodicity.id = participant.
+        INNER JOIN date_periodicity on date_periodicity.id = participant.date_periodicity_id
+        WHERE  date_periodicity.date = :date  
     """, nativeQuery = true)
-    Optional<Participant> getParticipantByDate(String date);
+    List<Participant> getParticipantByDate(String date);
 }

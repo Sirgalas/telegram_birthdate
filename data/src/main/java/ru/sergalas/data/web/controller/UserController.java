@@ -24,28 +24,24 @@ public class UserController {
     @ValidateBindingResult
     public ResponseEntity<ResponsePayload> createUser(@Valid @RequestBody UserRequestData data, BindingResult bindingResult) {
 
-            return new ResponseEntity<>(
-                    new ResponsePayload(
-                            HttpStatus.CREATED.value(),
-                            userService.createUser(data)
-                    ),
-                    HttpStatus.CREATED
-            );
-
-
+        return new ResponseEntity<>(
+            new ResponsePayload(
+                HttpStatus.CREATED.value(),
+                userService.createUser(data)
+            ),
+            HttpStatus.CREATED
+        );
     }
 
     @PostMapping("find")
     @ValidateBindingResult
     public ResponseEntity<ResponsePayload> findUser(@Valid @RequestBody UserRequestFindData data, BindingResult bindingResult) {
-            return new ResponseEntity<>(
-                    new ResponsePayload(
-                            HttpStatus.OK.value(),
-                            userService.getUserByUserName(data.getUsername())
-                    ),
-                    HttpStatus.OK
-            );
-
-
+        return new ResponseEntity<>(
+            new ResponsePayload(
+                HttpStatus.OK.value(),
+                userService.getUserByUserName(data.getUsername())
+            ),
+            HttpStatus.OK
+        );
     }
 }
