@@ -24,7 +24,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final ParticipantRepository participantRepository;
     private final DatePeriodicityRepository dateRepository;
     private final ParticipantMapper mapper;
-    private DatePeriodicityService datePeriodicityService;
+    private final DatePeriodicityService datePeriodicityService;
 
     @Override
     public ParticipantResponsePayload create(ParticipantRequestCreatePayload payload) {
@@ -34,17 +34,18 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public Participant update(ParticipantRequestUpdatePayload payload, UUID id) throws ParticipantNotFoundException {
+    public ParticipantResponsePayload update(ParticipantRequestUpdatePayload payload, UUID id) throws ParticipantNotFoundException {
 
         Participant participant = participantRepository.findById(id).orElseThrow(() -> new ParticipantNotFoundException("{participant.not_found}"));
         mapper.update(participant, payload);
         participant.setDatePeriodicity(datePeriodicityService.getDatePeriodicity(payload.date()));
-        return participantRepository.save(participant);
+        return mapper.toData(participantRepository.save(participant));
     }
 
     @Override
     public void delete(String id) throws ParticipantNotFoundException {
-        Participant participant = participantRepository.findById(UUID.fromString(id)).orElseThrow(() -> new ParticipantNotFoundException("{participant.not_found}"));
+        Participant participant = participantRepository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new ParticipantNotFoundException("{participant.not_found}"));
         participantRepository.delete(participant);
     }
 

@@ -31,7 +31,7 @@ public class ParticipantController {
         );
     }
 
-    @PutMapping("{id\\d}")
+    @PutMapping("{id}")
     public ResponseEntity<?> updateParticipant(@Valid @RequestBody ParticipantRequestUpdatePayload payload, @PathVariable String id) {
         try{
             participantService.update(payload, UUID.fromString(id));
@@ -46,7 +46,7 @@ public class ParticipantController {
         }
     }
 
-    @DeleteMapping("{id\\d}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> deleteParticipant(@PathVariable String id) {
         try {
             participantService.delete(id);

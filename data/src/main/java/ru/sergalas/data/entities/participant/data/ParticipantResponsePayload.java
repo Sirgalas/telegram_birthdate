@@ -2,6 +2,7 @@ package ru.sergalas.data.entities.participant.data;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ParticipantResponsePayload implements ResponseData {
     UUID id;
     String chatId;

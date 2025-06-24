@@ -18,6 +18,12 @@ public class ResponsePayload {
         this.code = code;
     }
 
+    public ResponsePayload(Integer code, ResponseData data, String error) {
+        this.data = data;
+        this.code = code;
+        this.error = error;
+    }
+
     public ResponsePayload(Integer code, String error) {
         this.code = code;
         this.error = error;

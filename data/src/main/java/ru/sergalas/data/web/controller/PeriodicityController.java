@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sergalas.data.entities.participant.exception.ParticipantNotFoundException;
-import ru.sergalas.data.entities.periodicity.data.PeriodicityCreateRequestData;
+import ru.sergalas.data.entities.periodicity.data.PeriodicityRequestData;
 import ru.sergalas.data.entities.periodicity.service.PeriodicityService;
 import ru.sergalas.data.web.payload.ResponsePayload;
 
@@ -29,7 +29,7 @@ public class PeriodicityController {
     }
 
     @PostMapping()
-    public ResponseEntity<ResponsePayload> create(@Valid @RequestBody PeriodicityCreateRequestData data) {
+    public ResponseEntity<ResponsePayload> create(@Valid @RequestBody PeriodicityRequestData data) {
         return new ResponseEntity<>(
             new ResponsePayload(
                 HttpStatus.OK.value(),
@@ -41,7 +41,7 @@ public class PeriodicityController {
 
     @PutMapping("{id:\\s+}")
     public ResponseEntity<?> update(
-            @Valid @RequestBody PeriodicityCreateRequestData data,
+            @Valid @RequestBody PeriodicityRequestData data,
             @PathVariable("id") String id)
     {
         try {
@@ -56,7 +56,7 @@ public class PeriodicityController {
                     , HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping("{id:\s+}")
+    @DeleteMapping("{id:\\s+}")
     public ResponseEntity<?> delete(@PathVariable("id") String id) {
         try{
             periodicityService.delete(id);

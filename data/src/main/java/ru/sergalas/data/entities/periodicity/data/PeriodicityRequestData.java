@@ -1,6 +1,5 @@
 package ru.sergalas.data.entities.periodicity.data;
 
-import jakarta.validation.constraints.Negative;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PeriodicityCreateRequestData {
+public class PeriodicityRequestData {
     @Size(min = 1, max = 255, message = "periodicity.description.size")
     String title;
     @Size(message = "periodicity.description.size", min = 1, max = 1220)

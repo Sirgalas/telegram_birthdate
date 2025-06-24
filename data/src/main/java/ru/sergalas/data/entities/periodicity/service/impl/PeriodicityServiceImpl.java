@@ -5,14 +5,13 @@ import org.springframework.stereotype.Service;
 import ru.sergalas.data.entities.date.service.DatePeriodicityService;
 import ru.sergalas.data.entities.participant.exception.ParticipantNotFoundException;
 import ru.sergalas.data.entities.periodicity.data.ListPeriodicityData;
-import ru.sergalas.data.entities.periodicity.data.PeriodicityCreateRequestData;
+import ru.sergalas.data.entities.periodicity.data.PeriodicityRequestData;
 import ru.sergalas.data.entities.periodicity.data.PeriodicityResponseData;
 import ru.sergalas.data.entities.periodicity.entity.Periodicity;
 import ru.sergalas.data.entities.periodicity.mapper.PeriodicityMapper;
 import ru.sergalas.data.entities.periodicity.repository.PeriodicityRepository;
 import ru.sergalas.data.entities.periodicity.service.PeriodicityService;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -23,19 +22,20 @@ public class PeriodicityServiceImpl implements PeriodicityService {
     private final PeriodicityMapper periodicityMapper;
 
     @Override
-    public PeriodicityResponseData create(PeriodicityCreateRequestData data) {
+    public PeriodicityResponseData create(PeriodicityRequestData data) {
         Periodicity periodicity = periodicityMapper.toEntity(data);
         periodicity.setDatePeriodicity(datePeriodicityService.getDatePeriodicity(data.getDate()));
         return periodicityMapper.toDate(periodicityRepository.save(periodicity));
     }
 
     @Override
-    public void update(PeriodicityCreateRequestData data, String id) {
+    public PeriodicityResponseData update(PeriodicityRequestData data, String id) {
         Periodicity periodicity = periodicityRepository
             .findById(UUID.fromString(id))
             .orElseThrow(() -> new ParticipantNotFoundException("{periodicity.error.not_found}"));
         periodicityMapper.update(periodicity, data);
-        periodicityRepository.save(periodicity);
+        periodicity.setDatePeriodicity(datePeriodicityService.getDatePeriodicity(data.getDate()));
+        return periodicityMapper.toDate(periodicityRepository.save(periodicity));
     }
 
     @Override

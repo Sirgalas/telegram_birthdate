@@ -13,7 +13,7 @@ public interface ParticipantService {
 
     public ParticipantResponsePayload create (ParticipantRequestCreatePayload payload);
 
-    public Participant update (ParticipantRequestUpdatePayload payload, UUID id) throws ParticipantNotFoundException;
+    public ParticipantResponsePayload update (ParticipantRequestUpdatePayload payload, UUID id) throws ParticipantNotFoundException;
 
     public void delete (String id) throws ParticipantNotFoundException;
 
