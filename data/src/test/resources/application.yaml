@@ -1,0 +1,12 @@
+spring:
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    enabled: true
+    default-schema: public
+    user: postgres
+    password: postgres
+    url: jdbc:tc:postgresql:16:///telegram_birthdate?TC_DAEMON=true
+  datasource:
+    url: jdbc:tc:postgresql:16:///telegram_birthdate?TC_DAEMON=true
+    username: postgres
+    password: postgres

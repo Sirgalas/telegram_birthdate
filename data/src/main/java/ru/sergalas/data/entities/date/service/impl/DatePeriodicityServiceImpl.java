@@ -20,7 +20,7 @@ public class DatePeriodicityServiceImpl implements DatePeriodicityService {
         } else {
             DatePeriodicity dateNew = new DatePeriodicity();
             dateNew.setDate(date);
-            return dateNew;
+            return dateRepository.save(dateNew);
         }
     }
 }

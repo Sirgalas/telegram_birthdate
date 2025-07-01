@@ -1,4 +1,4 @@
-package ru.sergalas.entities.periodicity.service;
+package ru.sergalas.data.entities.periodicity.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.MessageSource;
 import ru.sergalas.data.entities.date.entity.DatePeriodicity;
 import ru.sergalas.data.entities.date.service.DatePeriodicityService;
-import ru.sergalas.data.entities.participant.entity.Participant;
 import ru.sergalas.data.entities.participant.exception.ParticipantNotFoundException;
 import ru.sergalas.data.entities.periodicity.data.PeriodicityRequestData;
 import ru.sergalas.data.entities.periodicity.data.PeriodicityResponseData;

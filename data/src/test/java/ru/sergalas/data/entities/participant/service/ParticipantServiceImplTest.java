@@ -1,4 +1,4 @@
-package ru.sergalas.entities.participant.service;
+package ru.sergalas.data.entities.participant.service;
 
 
 import org.junit.jupiter.api.BeforeEach;
