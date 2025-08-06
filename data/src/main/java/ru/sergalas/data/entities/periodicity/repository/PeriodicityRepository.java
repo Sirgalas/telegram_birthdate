@@ -14,7 +14,7 @@ public interface PeriodicityRepository extends JpaRepository<Periodicity, UUID> 
     Optional<Periodicity> findById(UUID id);
 
     @Query(value = """
-        SELECT *
+        SELECT periodicity.*
         FROM periodicity
         INNER JOIN date_periodicity on date_periodicity.id = periodicity.date_periodicity_id
         WHERE  date_periodicity.date = :date  

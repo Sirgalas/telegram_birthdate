@@ -6,11 +6,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 @RequiredArgsConstructor
@@ -32,14 +36,30 @@ public class BadRequestExceptionControllerAdvice {
                     locale
                 )
             );
+
         problemDetail.setProperty(
             "errors",
-            exception
-                .getAllErrors()
+            exception.getFieldErrors()
                 .stream()
-                .map(ObjectError::getDefaultMessage)
-                .toList()
+                .collect(Collectors.groupingBy(
+                    FieldError::getField,
+                    Collectors.mapping(
+                        fieldError -> resolveMessage(fieldError, locale),
+                        Collectors.toList()
+                    )
+                )
+            )
         );
         return ResponseEntity.badRequest().body(problemDetail);
+    }
+
+    private String resolveMessage(FieldError fieldError, Locale locale) {
+        String message = messageSource.getMessage(
+                fieldError.getDefaultMessage(),
+                fieldError.getArguments(),
+                fieldError.getDefaultMessage(),
+                locale
+        );
+        return message;
     }
 }

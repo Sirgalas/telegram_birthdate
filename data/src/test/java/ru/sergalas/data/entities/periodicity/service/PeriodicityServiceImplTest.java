@@ -38,12 +38,14 @@ class PeriodicityServiceImplTest {
     @Mock
     private MessageSource messageSource;
 
+    private String chatId;
     private String title;
     private String description;
     private String date;
 
     @BeforeEach
     void setUp() {
+        chatId = "new-chat-id";
         title = "title";
         description = "description";
         date = "25.02";
@@ -55,7 +57,7 @@ class PeriodicityServiceImplTest {
     @Test
     void create_successFull_ReturnsPeriodicityResponseData() throws Exception {
         //given
-        var createRequestData = new PeriodicityRequestData(title, description,date);
+        var createRequestData = new PeriodicityRequestData(chatId, title, description,date);
         var periodicity = setPeriodicity();
         var datePeriodicity = setTestDatePeriodicity();
         var responseData = new PeriodicityResponseData(title,description);
@@ -77,7 +79,8 @@ class PeriodicityServiceImplTest {
         var updateTitle = "updateTitle";
         var updateDescription = "updateDescription";
         var updateDate = "25.02";
-        var periodicityRequestData = new PeriodicityRequestData(updateTitle, updateDescription, updateDate);
+        var updateChatId = "updateChatId";
+        var periodicityRequestData = new PeriodicityRequestData(updateChatId, updateTitle, updateDescription, updateDate);
         var periodicity = setPeriodicity();
         periodicity.setId(id);
         var datePeriodicity = setTestDatePeriodicity();
@@ -100,7 +103,8 @@ class PeriodicityServiceImplTest {
         var updateTitle = "updateTitle";
         var updateDescription = "updateDescription";
         var updateDate = "25.02";
-        var periodicityRequestData = new PeriodicityRequestData(updateTitle, updateDescription, updateDate);
+        var updateChatId = "updateChatId";
+        var periodicityRequestData = new PeriodicityRequestData(updateChatId, updateTitle, updateDescription, updateDate);
         //when
         when(periodicityRepository.findById(id)).thenReturn(Optional.empty());
         //then

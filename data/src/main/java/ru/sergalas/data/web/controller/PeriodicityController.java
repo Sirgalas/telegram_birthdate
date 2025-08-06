@@ -17,8 +17,8 @@ public class PeriodicityController {
 
     private final PeriodicityService periodicityService;
 
-    @GetMapping("{date:\\s+}")
-    public ResponseEntity<ResponsePayload> getByDate(@PathVariable("date") String date) {
+    @GetMapping()
+    public ResponseEntity<ResponsePayload> getByDate(@RequestParam(name = "date") String date) {
         return new ResponseEntity<>(
                 new ResponsePayload(
                         HttpStatus.OK.value(),
@@ -32,14 +32,14 @@ public class PeriodicityController {
     public ResponseEntity<ResponsePayload> create(@Valid @RequestBody PeriodicityRequestData data) {
         return new ResponseEntity<>(
             new ResponsePayload(
-                HttpStatus.OK.value(),
+                HttpStatus.CREATED.value(),
                 periodicityService.create(data)
             ),
-            HttpStatus.OK
+            HttpStatus.CREATED
         );
     }
 
-    @PutMapping("{id:\\s+}")
+    @PutMapping("{id}")
     public ResponseEntity<?> update(
             @Valid @RequestBody PeriodicityRequestData data,
             @PathVariable("id") String id)
@@ -56,7 +56,7 @@ public class PeriodicityController {
                     , HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping("{id:\\s+}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable("id") String id) {
         try{
             periodicityService.delete(id);

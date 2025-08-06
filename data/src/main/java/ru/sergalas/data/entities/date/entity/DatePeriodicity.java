@@ -25,10 +25,10 @@ public class DatePeriodicity {
 
     private String date;
 
-    @OneToMany(mappedBy = "datePeriodicity", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "datePeriodicity", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     List<Participant> participants;
 
-    @OneToMany(mappedBy = "datePeriodicity", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "datePeriodicity", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     List<Periodicity> periodicities;
 
 }

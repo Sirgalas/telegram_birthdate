@@ -3,12 +3,8 @@ package ru.sergalas.data.entities.participant.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
 import ru.sergalas.data.entities.date.entity.DatePeriodicity;
-import ru.sergalas.data.entities.periodicity.data.PeriodicityData;
 
-import java.sql.Types;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter

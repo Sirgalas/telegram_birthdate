@@ -10,3 +10,5 @@ spring:
     url: jdbc:tc:postgresql:16:///telegram_birthdate?TC_DAEMON=true
     username: postgres
     password: postgres
+server:
+  port: 8081

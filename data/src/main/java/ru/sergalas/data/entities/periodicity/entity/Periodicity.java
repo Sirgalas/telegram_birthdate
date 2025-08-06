@@ -22,7 +22,7 @@ public class Periodicity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
-
+    String chatId;
     String title;
     @Column(length = 1220)
     String description;

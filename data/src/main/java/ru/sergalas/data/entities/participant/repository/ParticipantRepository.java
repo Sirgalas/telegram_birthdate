@@ -12,10 +12,11 @@ import java.util.UUID;
 public interface ParticipantRepository extends JpaRepository<Participant, UUID> {
 
     @Query(value = """
-        SELECT *
-        FROM participant
-        INNER JOIN date_periodicity ON date_periodicity.id = participant.date_periodicity_id
-        WHERE  date_periodicity.date = :date  
+        SELECT 
+        p.*
+        FROM participants p 
+        INNER JOIN date_periodicity dp ON dp.id = p.date_periodicity_id
+        WHERE  dp.date = :date 
     """, nativeQuery = true)
     List<Participant> getParticipantByDate(String date);
 }
