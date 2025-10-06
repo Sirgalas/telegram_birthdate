@@ -4,7 +4,6 @@ services:
       context: docker
       dockerfile: postgres/postgres.dockerfile
     environment:
-      POSTGRES_VERSION: ${POSTGRES_VERSION}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
@@ -34,24 +33,19 @@ services:
       start_period: 10s
       retries: 5
     entrypoint: /bin/sh -c "chmod 600 /pgadmin4/pgpass; /entrypoint.sh;"
-  authDb:
-    image: postgres:17.5
-    restart: "no"
-    ports:
-      - ${POSTGRES_AUTH_PORT}:5432
-    volumes:
-      - ./docker/postgres/authDb:/var/lib/postgresql/data
+  auth-db:
+    build:
+      context: docker
+      dockerfile: postgres/auth.dockerfile
     environment:
       POSTGRES_USER: ${POSTGRES_AUTH_USER}
       POSTGRES_PASSWORD: ${POSTGRES_AUTH_PASSWORD}
-      POSTGRES_AUTH_DB: telegram_birthdate
+      POSTGRES_AUTH_DB: ${POSTGRES_AUTH_DB}
       PG_DATA: /var/lib/postgresql/data-nocache
-    healthcheck:
-      test: pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB
-      interval: 10s
-      timeout: 5s
-      start_period: 10s
-      retries: 5
+    volumes:
+      - ./docker/postgres/authDb:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_AUTH_PORT}:5432
   keycloak:
     image: quay.io/keycloak/keycloak:26.3.2
     restart: "no"
@@ -63,9 +57,9 @@ services:
       KC_HTTP_PORT: 9080
       KEYCLOAK_ADMIN: ${KEYCLOAK_USER}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_PASSWORD}
-      KC_DB_URL: jdbc:postgresql://authDb:5432/${POSTGRES_AUTH_DB}
+      KC_DB_URL: jdbc:postgresql://auth-db:5432/${POSTGRES_AUTH_DB}
       KC_DB: postgres
-      KC_DB_URL_HOST: authDb
+      KC_DB_URL_HOST: auth-db
       KC_DB_URL_PORT: ${POSTGRES_AUTH_PORT}
       KC_DB_URL_DATABASE: ${POSTGRES_AUTH_DB}
       KC_DB_USERNAME: ${POSTGRES_AUTH_USER}
@@ -79,7 +73,7 @@ services:
       start_period: 60s
       retries: 5
     depends_on:
-      - authDb
+      - auth-db
 networks:
   notification_telegram:
     driver: bridge

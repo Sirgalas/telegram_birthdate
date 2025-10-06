@@ -1,0 +1,7 @@
+app:
+  keycloak:
+    admin:
+      url: http://localhost:19080
+      realm: master
+      client-id: birthday-admin-client
+      target-realm: birthdayRealms
