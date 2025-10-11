@@ -1,3 +1,4 @@
 rootProject.name = 'birtdate'
 include 'data'
 include "security"
+include 'admin'

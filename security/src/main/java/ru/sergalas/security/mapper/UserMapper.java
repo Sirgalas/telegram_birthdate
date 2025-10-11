@@ -9,6 +9,7 @@ import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 import ru.sergalas.security.data.UserCreateRecord;
 import ru.sergalas.security.data.UserInfoRecord;
+import ru.sergalas.security.data.UserResponseRecord;
 import ru.sergalas.security.data.UserUpdateRecord;
 
 import java.util.Collections;
@@ -22,12 +23,13 @@ public interface UserMapper {
     @Mapping(target = "realmRoles", source = "role", qualifiedByName = "mapRoleToList")
     UserRepresentation toUserRepresentation(UserCreateRecord userCreateRecord);
 
+    UserResponseRecord fromUserRepresentation(UserRepresentation userRepresentation);
+
     @Mapping(target = "realmRoles",source = "role", qualifiedByName = "mapRoleToList")
     void updateUserRepresentation(UserUpdateRecord updateRecord, @MappingTarget UserRepresentation userRepresentation);
 
     @Mapping(target = "roles", source = "realmRoles")
     UserInfoRecord toUserInfoRecord(UserRepresentation userRepresentation);
-
 
     @Named("mapRoleToList")
     default List<String> mapRoleToList(String role) {

@@ -1,11 +1,13 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.5.0'
+    id 'org.springframework.boot' version '3.5.6'
     id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.vaadin' version '24.9.2'
 }
 
 group = 'ru.sergalas'
 version = '0.0.1-SNAPSHOT'
+description = 'admin'
 
 java {
     toolchain {
@@ -23,22 +25,25 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    set('vaadinVersion', "24.9.2")
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.keycloak:keycloak-admin-client:26.0.6'
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'  // Актуальная версия на 2025
-
+    implementation 'com.vaadin:vaadin-spring-boot-starter'
     compileOnly 'org.projectlombok:lombok'
-
     annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
+    }
 }
 
 tasks.named('test') {
