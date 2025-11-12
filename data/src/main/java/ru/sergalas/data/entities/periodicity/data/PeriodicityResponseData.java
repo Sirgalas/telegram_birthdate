@@ -14,4 +14,5 @@ import ru.sergalas.data.web.data.ResponseData;
 public class PeriodicityResponseData implements ResponseData {
     String title;
     String description;
+    String date;
 }

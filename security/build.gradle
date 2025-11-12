@@ -29,7 +29,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.keycloak:keycloak-admin-client:26.0.6'
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'  // Актуальная версия на 2025
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 
     compileOnly 'org.projectlombok:lombok'
 

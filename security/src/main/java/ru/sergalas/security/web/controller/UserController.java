@@ -3,10 +3,7 @@ package ru.sergalas.security.web.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.sergalas.security.service.UserService;
 import ru.sergalas.security.web.helper.ControllerHelper;
 import ru.sergalas.security.web.payload.ResponsePayload;
@@ -19,7 +16,11 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("index")
-    public ResponseEntity<ResponsePayload> index(@PathVariable String userName, @PathVariable Integer first, @PathVariable Integer count){
+    public ResponseEntity<ResponsePayload> index(
+            @RequestParam(name="user_name", required = false)String userName,
+            @RequestParam(name="first", required = false) Integer first,
+            @RequestParam(name="count", required = false) Integer count
+    ){
         return ControllerHelper.isSuccess(HttpStatus.OK,userService.getAllUser(userName,first,count));
     }
 

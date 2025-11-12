@@ -18,7 +18,7 @@ public class PeriodicityController {
     private final PeriodicityService periodicityService;
 
     @GetMapping()
-    public ResponseEntity<ResponsePayload> getByDate(@RequestParam(name = "date") String date) {
+    public ResponseEntity<ResponsePayload> getByDate(@RequestParam(name = "date", required = false) String date) {
         return new ResponseEntity<>(
                 new ResponsePayload(
                         HttpStatus.OK.value(),

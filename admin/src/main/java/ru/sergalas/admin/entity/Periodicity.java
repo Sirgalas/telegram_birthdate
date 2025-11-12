@@ -5,10 +5,16 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record Periodicity(
+        @NotBlank(message = "data.participant.not_blank")
         String chatId,
-        String title,
-        String description,
+        @NotBlank(message = "data.participant.not_blank")
+        @Size(min = 1, max = 255,message = "{user.firstname.size.error}")
+        String firstName,
+        @Size(min = 1, max = 255,message = "{user.lastname.size.error}")
+        String lastName,
+        @Size(min = 1, max = 255,message = "{user.patronymic.size.error}")
+        String patronymic,
+        @Size(min = 5, max = 5,message = "{date.size.error}")
+        @Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[0-2])$", message = "{date_periodicity.pattern.error}")
         String date
-) {
-
-}
+) {}

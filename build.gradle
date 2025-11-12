@@ -31,7 +31,3 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-bootJar {
-    mainClass = "ru.webrise.${project.name}.${project.name.capitalize()}Application"
-}

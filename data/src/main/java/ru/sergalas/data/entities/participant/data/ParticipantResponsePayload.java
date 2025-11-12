@@ -20,4 +20,5 @@ public class ParticipantResponsePayload implements ResponseData {
     String firstName;
     String lastName;
     String patronymic;
+    String date;
 }

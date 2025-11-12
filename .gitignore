@@ -4,7 +4,9 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-docker/
+docker/pgadmin/data
+docker/postgres/authDb
+docker/postgres/db
 ### STS ###
 .apt_generated
 .classpath
