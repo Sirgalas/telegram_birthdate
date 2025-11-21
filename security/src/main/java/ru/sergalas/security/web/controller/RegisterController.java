@@ -2,6 +2,7 @@ package ru.sergalas.security.web.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sergalas.security.data.UserCreateRecord;
@@ -18,14 +19,12 @@ public class RegisterController {
 
     @PostMapping("create")
     public ResponseEntity<ResponsePayload> createUser(@Valid @RequestBody UserCreateRecord userCreateRecord) {
-         userService.createUser(userCreateRecord);
-         return ControllerHelper.isOk();
+         return ControllerHelper.isSuccess(HttpStatus.OK, userService.createUser(userCreateRecord));
     }
 
     @PostMapping("update/{id}")
     public ResponseEntity<ResponsePayload> updateUser(@PathVariable String id,  @Valid @RequestBody UserUpdateRecord userUpdateRecord) {
-       userService.updateUser(id, userUpdateRecord);
-        return ControllerHelper.isOk();
+        return ControllerHelper.isSuccess(HttpStatus.OK,userService.updateUser(id, userUpdateRecord));
     }
 }
 

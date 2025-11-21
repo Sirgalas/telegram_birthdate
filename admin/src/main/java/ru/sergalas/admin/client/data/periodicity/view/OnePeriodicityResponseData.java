@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import java.util.UUID;
 
 public record OnePeriodicityResponseData(
+
+        @NotBlank(message = "data.participant.not_blank")
         UUID id,
         @NotBlank(message = "data.participant.not_blank")
         String chatId,

@@ -1,10 +1,16 @@
 package ru.sergalas.admin.entity;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 public record Periodicity(
+
+        @NotNull
+        UUID id,
         @NotBlank(message = "data.participant.not_blank")
         String chatId,
         @NotBlank(message = "data.participant.not_blank")

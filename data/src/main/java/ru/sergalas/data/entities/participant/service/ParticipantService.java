@@ -18,4 +18,6 @@ public interface ParticipantService {
     public void delete (String id) throws ParticipantNotFoundException;
 
     public ListResponsePayload getByDate(String date);
+
+    public ParticipantResponsePayload getById(String id) throws ParticipantNotFoundException;
 }

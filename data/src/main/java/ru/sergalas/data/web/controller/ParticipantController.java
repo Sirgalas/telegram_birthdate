@@ -80,4 +80,24 @@ public class ParticipantController {
                 , HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping
+    private ResponseEntity<ResponsePayload> getOneParticipant(@RequestParam(name = "id") String id) {
+        try{
+            return new ResponseEntity<>(
+                new ResponsePayload(
+                    HttpStatus.OK.value(),
+                    participantService.getById(id)
+                ),
+                HttpStatus.OK
+            );
+        }catch (ParticipantNotFoundException e) {
+            return new ResponseEntity<>(
+                    new ResponsePayload(
+                            HttpStatus.NOT_FOUND.value(),
+                            e.getMessage()
+                    ),
+                    HttpStatus.NOT_FOUND);
+        }
+    }
 }

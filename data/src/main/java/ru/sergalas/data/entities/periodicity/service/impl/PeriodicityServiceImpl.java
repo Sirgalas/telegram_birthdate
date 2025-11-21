@@ -56,4 +56,13 @@ public class PeriodicityServiceImpl implements PeriodicityService {
                 .toList()
         );
     }
+
+    @Override
+    public PeriodicityResponseData getPeriodicity(String id) {
+        return  periodicityRepository
+                .findById(UUID.fromString(id))
+                .map(periodicityMapper::toDate)
+                .orElseThrow(() -> new ParticipantNotFoundException("{periodicity.error.not_found}") );
+
+    }
 }

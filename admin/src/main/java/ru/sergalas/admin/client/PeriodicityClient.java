@@ -11,4 +11,5 @@ public interface PeriodicityClient {
     public UpdateResponseData updatePeriodicity(UpdateRequestData updateRequestData, String id);
     public void deletePeriodicity(String id);
     public ListPeriodicityData getPeriodicity(String data);
+    public ListPeriodicityData getPeriodicity();
 }

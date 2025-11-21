@@ -11,7 +11,9 @@ import ru.sergalas.admin.client.ParticipantClient;
 import ru.sergalas.admin.client.data.participant.create.CreateRequestData;
 import ru.sergalas.admin.client.data.participant.create.CreateResponseData;
 import ru.sergalas.admin.client.data.participant.update.UpdateRequestData;
+import ru.sergalas.admin.client.data.participant.update.UpdateResponseData;
 import ru.sergalas.admin.client.data.participant.view.ListParticipantData;
+import ru.sergalas.admin.client.data.participant.view.OneParticipantData;
 
 import java.net.URI;
 
@@ -35,7 +37,7 @@ public class ParticipantClientImpl implements ParticipantClient {
     }
 
     @Override
-    public UpdateRequestData updateParticipant(UpdateRequestData updateRequestData, String id) {
+    public UpdateResponseData updateParticipant(UpdateRequestData updateRequestData, String id) {
         return client
             .put()
             .uri(baseUri + "/participant/%s".formatted(id))
@@ -43,7 +45,7 @@ public class ParticipantClientImpl implements ParticipantClient {
             .contentType(MediaType.APPLICATION_JSON)
             .body(updateRequestData)
             .retrieve()
-            .body(UpdateRequestData.class);
+            .body(UpdateResponseData.class);
     }
 
     @Override
@@ -60,5 +62,21 @@ public class ParticipantClientImpl implements ParticipantClient {
             .uri(uriBuilder.build())
             .retrieve()
             .body(ListParticipantData.class);
+    }
+
+    @Override
+    public ListParticipantData getParticipant() {
+        URI uri = URI.create(baseUri + "/participant");
+        UriBuilder uriBuilder = UriComponentsBuilder.fromUri(uri);
+        return client
+                .get()
+                .uri(uriBuilder.build())
+                .retrieve()
+                .body(ListParticipantData.class);
+    }
+
+    @Override
+    public OneParticipantData getOneParticipant(String id) {
+        return null;
     }
 }

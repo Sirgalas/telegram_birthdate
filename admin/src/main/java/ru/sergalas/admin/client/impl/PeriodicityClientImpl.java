@@ -64,4 +64,15 @@ public class PeriodicityClientImpl implements PeriodicityClient {
             .retrieve()
             .body(ListPeriodicityData.class);
     }
+
+    @Override
+    public ListPeriodicityData getPeriodicity() {
+        URI uri = URI.create(baseUri + "/periodicity");
+        UriBuilder uriBuilder = UriComponentsBuilder.fromUri(uri);
+        return client
+                .get()
+                .uri(uriBuilder.build())
+                .retrieve()
+                .body(ListPeriodicityData.class);
+    }
 }

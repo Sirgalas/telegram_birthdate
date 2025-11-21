@@ -56,6 +56,11 @@ public class ParticipantServiceImpl implements ParticipantService {
         );
     }
 
+    @Override
+    public ParticipantResponsePayload getById(String id) throws ParticipantNotFoundException {
+        return participantRepository.findById(UUID.fromString(id)).map(mapper::toData).orElseThrow(() -> new ParticipantNotFoundException("{participant.not_found}"));
+    }
+
     private DatePeriodicity getDatePeriodicity(String date) {
         Optional<DatePeriodicity> dateFind = dateRepository.findByDate(date);
         if(dateFind.isPresent()) {

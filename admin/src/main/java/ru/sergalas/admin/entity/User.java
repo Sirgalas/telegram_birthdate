@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record User(
+        String id,
         @NotBlank(message = "Username is required")
         String username,
         @Email(message = "Invalid email format")

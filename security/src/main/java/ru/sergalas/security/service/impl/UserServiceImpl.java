@@ -1,6 +1,7 @@
 package ru.sergalas.security.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Value("${app.keycloak.admin.target-realm}")
     private String targetRealm;
 
-    public String createUser(UserCreateRecord createRecord) {
+    public UserResponseRecord createUser(UserCreateRecord createRecord) {
         UserRepresentation user = userMapper.toUserRepresentation(createRecord);
         user.setEnabled(true);
         user.setEmailVerified(true);
@@ -44,7 +45,8 @@ public class UserServiceImpl implements UserService {
             if (response.getStatus() == 201) {
                 String createdUserId = getCreatedUserId(response);
                 addRoleToUser(createdUserId, createRecord.role());
-                return "User created successfully";
+                String userId = CreatedResponseUtil.getCreatedId(response);
+                return  userMapper.fromUserRepresentation(keycloak.realm(targetRealm).users().get(userId).toRepresentation());
             } else {
 
                 String errorBody = response.readEntity(String.class);
@@ -59,7 +61,7 @@ public class UserServiceImpl implements UserService {
             }
     }
 
-    public String updateUser(String userId, UserUpdateRecord userUpdateRecord) {
+    public UserResponseRecord updateUser(String userId, UserUpdateRecord userUpdateRecord) {
         UserRepresentation existingUser;
         try{
             existingUser = keycloak.realm(targetRealm).users().get(userId).toRepresentation();
@@ -73,7 +75,7 @@ public class UserServiceImpl implements UserService {
             keycloak.realm(targetRealm).users().get(userId).resetPassword(credential);
         }
         keycloak.realm(targetRealm).users().get(userId).update(existingUser);
-        return "User updated successfully";
+        return userMapper.fromUserRepresentation(keycloak.realm(targetRealm).users().get(userId).toRepresentation());
     }
 
     public UserResponseListRecord getAllUser(String userName, Integer first, Integer count) {

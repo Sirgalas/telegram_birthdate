@@ -8,8 +8,8 @@ import ru.sergalas.security.data.UserUpdateRecord;
 import java.util.List;
 
 public interface UserService {
-    public String createUser(UserCreateRecord createRecord);
-    public String updateUser(String userId, UserUpdateRecord userUpdateRecord);
+    public UserResponseRecord createUser(UserCreateRecord createRecord);
+    public UserResponseRecord updateUser(String userId, UserUpdateRecord userUpdateRecord);
     public UserResponseListRecord getAllUser(String userName, Integer first, Integer count);
     public UserResponseRecord getUser(String userId);
 }

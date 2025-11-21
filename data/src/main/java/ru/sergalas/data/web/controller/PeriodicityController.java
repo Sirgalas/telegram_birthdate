@@ -70,4 +70,24 @@ public class PeriodicityController {
                     , HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping
+    public ResponseEntity<ResponsePayload> getOne(@RequestParam(name = "id") String id) {
+        try{
+            return new ResponseEntity<>(
+                new ResponsePayload(
+                    HttpStatus.CREATED.value(),
+                    periodicityService.getPeriodicity(id)
+                ),
+                HttpStatus.CREATED
+            );
+        }catch (ParticipantNotFoundException e) {
+            return new ResponseEntity<>(
+                new ResponsePayload(
+                    HttpStatus.NOT_FOUND.value(),
+                    e.getMessage()
+                ),
+                HttpStatus.NOT_FOUND);
+        }
+    }
 }

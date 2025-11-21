@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public record CreateResponseData(
+
+     String id,
      @NotBlank(message = "Username is required")
      String username,
      @Email(message = "Invalid email format")
