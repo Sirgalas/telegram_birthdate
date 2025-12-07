@@ -39,7 +39,7 @@ public class ClientsBeans {
 
     @Bean
     @Scope("prototype")
-    public RestClient restClientBuilder(
+    public RestClient myRestClientBuilder(
         ClientRegistrationRepository clientRegistrationRepository,
         OAuth2AuthorizedClientRepository authorizedClientRepository
     ) {

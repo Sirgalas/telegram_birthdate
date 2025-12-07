@@ -62,7 +62,7 @@ public class ParticipantController {
     }
 
     @GetMapping
-    private ResponseEntity<ResponsePayload> getParticipant(@RequestParam(name = "date", required = false) String date) {
+    private ResponseEntity<ResponsePayload> getByDate(@RequestParam(name = "date", required = false) String date) {
         try{
             return new ResponseEntity<>(
                 new ResponsePayload(
@@ -81,8 +81,8 @@ public class ParticipantController {
         }
     }
 
-    @GetMapping
-    private ResponseEntity<ResponsePayload> getOneParticipant(@RequestParam(name = "id") String id) {
+    @GetMapping("{id}")
+    private ResponseEntity<ResponsePayload> getOne(@PathVariable String id) {
         try{
             return new ResponseEntity<>(
                 new ResponsePayload(

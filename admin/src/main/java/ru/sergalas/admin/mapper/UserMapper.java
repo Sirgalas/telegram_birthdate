@@ -8,7 +8,7 @@ import ru.sergalas.admin.client.data.register.update.UpdateResponseData;
 import ru.sergalas.admin.client.data.user.view.OneUserData;
 import ru.sergalas.admin.entity.User;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
     User fromCreateResponse(CreateResponseData createResponseData);
     User fromUpdateResponse(UpdateResponseData createResponseData);

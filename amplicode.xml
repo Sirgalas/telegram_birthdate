@@ -8,6 +8,11 @@
           <package value="ru.sergalas.data" />
         </packages>
       </persistence-unit>
+      <persistence-unit moduleName="birtdate.data.main" name="Default">
+        <packages>
+          <package value="ru.sergalas.data" />
+        </packages>
+      </persistence-unit>
     </persistence-units>
   </component>
 </project>

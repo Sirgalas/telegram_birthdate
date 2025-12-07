@@ -8,7 +8,7 @@ import ru.sergalas.admin.mapper.PeriodicityMapper;
 import ru.sergalas.admin.mapper.UserMapper;
 
 @Configuration
-public class MapperBeans {
+public class MapperBeans {/*
     @Bean
     UserMapper userMapper() {return Mappers.getMapper(UserMapper.class);}
 
@@ -16,5 +16,5 @@ public class MapperBeans {
     PeriodicityMapper periodicityMapper() {return Mappers.getMapper(PeriodicityMapper.class);}
 
     @Bean
-    ParticipantMapper participantMapper() {return Mappers.getMapper(ParticipantMapper.class);}
+    ParticipantMapper participantMapper() {return Mappers.getMapper(ParticipantMapper.class);}*/
 }

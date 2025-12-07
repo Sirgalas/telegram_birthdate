@@ -10,7 +10,7 @@ import ru.sergalas.data.entities.periodicity.entity.Periodicity;
 @Mapper
 public interface PeriodicityMapper {
     Periodicity toEntity(PeriodicityRequestData data);
-    @Mapping(target = "date", source = "DatePeriodicity.date")
+    @Mapping(target = "date", source = "datePeriodicity.date")
     PeriodicityResponseData toDate(Periodicity periodicity);
     void update(@MappingTarget Periodicity entity, PeriodicityRequestData data);
 }

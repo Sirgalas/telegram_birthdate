@@ -8,7 +8,7 @@ import ru.sergalas.admin.client.data.participant.update.UpdateResponseData;
 import ru.sergalas.admin.client.data.participant.view.OneParticipantData;
 import ru.sergalas.admin.entity.Participant;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ParticipantMapper {
     Participant fromCreateRequest(CreateResponseData requestData);
     Participant fromUpdateRequest(UpdateResponseData requestData);

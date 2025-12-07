@@ -71,8 +71,8 @@ public class PeriodicityController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<ResponsePayload> getOne(@RequestParam(name = "id") String id) {
+    @GetMapping("{id}")
+    public ResponseEntity<ResponsePayload> getOne(@PathVariable String id) {
         try{
             return new ResponseEntity<>(
                 new ResponsePayload(

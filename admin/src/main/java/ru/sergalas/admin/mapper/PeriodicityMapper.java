@@ -8,7 +8,7 @@ import ru.sergalas.admin.client.data.periodicity.update.UpdateRequestData;
 import ru.sergalas.admin.client.data.periodicity.view.OnePeriodicityResponseData;
 import ru.sergalas.admin.entity.Periodicity;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface PeriodicityMapper {
     Periodicity fromCreateRequestData(CreateResponseData createRequestData);
     Periodicity fromUpdateRequestData(UpdateResponseData updateRequestData);
