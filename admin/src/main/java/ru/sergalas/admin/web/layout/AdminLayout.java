@@ -12,6 +12,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.theme.Theme;
+import ru.sergalas.admin.web.controller.IndexView;
 import ru.sergalas.admin.web.controller.ParticipantView;
 import ru.sergalas.admin.web.controller.PeriodicityView;
 import ru.sergalas.admin.web.controller.UserView;
@@ -21,6 +22,7 @@ public class AdminLayout extends AppLayout implements AfterNavigationObserver {
     private final Button usersBtn;
     private final Button ordersBtn;
     private final Button analyticsBtn;
+    private final Button indexBtn;
 
     public AdminLayout() {
         H1 title = new H1("Админка");
@@ -36,20 +38,22 @@ public class AdminLayout extends AppLayout implements AfterNavigationObserver {
         header.getStyle().set("box-shadow", "0 2px 4px -1px rgba(0,0,0,0.1)");
         addToNavbar(true, header);
 
-        usersBtn = createMenuButton("Пользователи", VaadinIcon.USERS, ParticipantView.class);
-        ordersBtn = createMenuButton("Заказы", VaadinIcon.LIST, PeriodicityView.class);
-        analyticsBtn = createMenuButton("Аналитика", VaadinIcon.CHART, UserView.class);
+        usersBtn = createMenuButton("Участники", VaadinIcon.USERS, ParticipantView.class);
+        ordersBtn = createMenuButton("Периоды", VaadinIcon.LIST, PeriodicityView.class);
+        analyticsBtn = createMenuButton("Пользователи", VaadinIcon.USERS, UserView.class);
+        indexBtn = createMenuButton("Главная", VaadinIcon.HOME, IndexView.class);
 
         VerticalLayout drawerContent = new VerticalLayout(
                 usersBtn,
                 ordersBtn,
-                analyticsBtn
+                analyticsBtn,
+                indexBtn
         );
         drawerContent.setPadding(false);
         drawerContent.setSpacing(false);
         drawerContent.getStyle().set("width", "100%");
 
-        addToDrawer(usersBtn, ordersBtn, analyticsBtn);
+        addToDrawer(drawerContent);
     }
 
 
@@ -62,7 +66,7 @@ public class AdminLayout extends AppLayout implements AfterNavigationObserver {
         }
 
         RouterLink link = new RouterLink();
-        link.setRoute(target, null);
+        link.setRoute(target,  RouteParameters.empty());
         Icon icon = iconType.create();
         icon.getStyle().set("margin-right", "var(--lumo-space-s)");
         Span text = new Span(label);
@@ -88,17 +92,20 @@ public class AdminLayout extends AppLayout implements AfterNavigationObserver {
 
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
-
+        indexBtn.removeClassName("active");
         usersBtn.removeClassName("active");
         ordersBtn.removeClassName("active");
         analyticsBtn.removeClassName("active");
         String path = event.getLocation().getPath();
-        if (path.startsWith("users")) {
-            usersBtn.addClassName("active");
-        } else if (path.startsWith("orders")) {
-            ordersBtn.addClassName("active");
-        } else if (path.startsWith("analytics")) {
-            analyticsBtn.addClassName("active");
+        switch (path) {
+            case "" -> indexBtn.addClassName("active");
+            case String p when p.startsWith("participants") -> usersBtn.addClassName("active");
+            case String p when p.startsWith("periodicity") -> ordersBtn.addClassName("active");
+            case String p when p.startsWith("users") -> analyticsBtn.addClassName("active");
+            default -> {
+
+            }
         }
     }
+
 }

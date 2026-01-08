@@ -51,8 +51,13 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public ListResponsePayload getByDate(String date) {
+        if(date != null) {
+            return new ListResponsePayload(
+                participantRepository.getParticipantByDate(date).stream().map(mapper::toData).toList()
+            );
+        }
         return new ListResponsePayload(
-            participantRepository.getParticipantByDate(date).stream().map(mapper::toData).toList()
+            participantRepository.findAll().stream().map(mapper::toData).toList()
         );
     }
 

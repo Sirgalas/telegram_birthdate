@@ -5,6 +5,6 @@ import com.vaadin.flow.theme.Theme;
 import org.springframework.stereotype.Component;
 
 @Component
-@Theme("myadmin")
+@Theme("lumo")
 public class AppShell implements AppShellConfigurator {
 }

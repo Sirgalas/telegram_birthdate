@@ -5,14 +5,11 @@ import org.springframework.stereotype.Service;
 import ru.sergalas.admin.client.ParticipantClient;
 import ru.sergalas.admin.client.data.participant.create.CreateRequestData;
 import ru.sergalas.admin.client.data.participant.update.UpdateRequestData;
-import ru.sergalas.admin.client.data.participant.update.UpdateResponseData;
-import ru.sergalas.admin.client.data.participant.view.ListParticipantData;
 import ru.sergalas.admin.client.data.participant.view.OneParticipantData;
 import ru.sergalas.admin.entity.Participant;
 import ru.sergalas.admin.mapper.ParticipantMapper;
 import ru.sergalas.admin.services.ParticipantService;
 
-import java.net.URI;
 import java.util.List;
 
 @Service
@@ -43,7 +40,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         participantClient.deleteParticipant(participant.id().toString());
         return participantClient
             .getParticipant()
-            .listParticipant()
+            .participants()
             .stream()
             .map(participantMapper::fromOneParticipantData)
             .toList();
@@ -52,16 +49,14 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public List<Participant> getAllParticipants(String data) {
 
-        return participantClient
+        List<Participant> participants = participantClient
             .getParticipant(data)
-            .listParticipant()
+            .participants()
             .stream()
             .map(participantMapper::fromOneParticipantData)
             .toList();
+
+        return participants;
     }
 
-    @Override
-    public OneParticipantData getOneParticipant(Participant participant) {
-        return null;
-    }
 }

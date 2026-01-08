@@ -1,22 +1,26 @@
 package ru.sergalas.admin.client.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
+import ru.sergalas.admin.client.ClientHandlerRecord;
 import ru.sergalas.admin.client.ParticipantClient;
 import ru.sergalas.admin.client.data.participant.create.CreateRequestData;
 import ru.sergalas.admin.client.data.participant.create.CreateResponseData;
 import ru.sergalas.admin.client.data.participant.update.UpdateRequestData;
 import ru.sergalas.admin.client.data.participant.update.UpdateResponseData;
-import ru.sergalas.admin.client.data.participant.view.ListParticipantData;
-import ru.sergalas.admin.client.data.participant.view.OneParticipantData;
+import ru.sergalas.admin.client.data.participant.view.ParticipantsListRecord;
+import ru.sergalas.admin.client.helpers.ClientHelper;
 
 import java.net.URI;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ParticipantClientImpl implements ParticipantClient {
@@ -26,57 +30,66 @@ public class ParticipantClientImpl implements ParticipantClient {
 
     @Override
     public CreateResponseData createParticipant(CreateRequestData createRequestData) {
-        return client
+        var send =  client
             .post()
             .uri(baseUri + "/participant")
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
-            .body(createRequestData)
-            .retrieve()
-            .body(CreateResponseData.class);
+            .body(createRequestData);
+
+        return ClientHelper.getReturnedData(
+                send,
+                new ParameterizedTypeReference<ClientHandlerRecord<CreateResponseData>>(){});
     }
 
     @Override
     public UpdateResponseData updateParticipant(UpdateRequestData updateRequestData, String id) {
-        return client
+        var send = client
             .put()
-            .uri(baseUri + "/participant/%s".formatted(id))
+            .uri(baseUri + "/participants/%s".formatted(id))
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
-            .body(updateRequestData)
-            .retrieve()
-            .body(UpdateResponseData.class);
+            .body(updateRequestData);
+
+        return ClientHelper.getReturnedData(
+                send,
+                new ParameterizedTypeReference<ClientHandlerRecord<UpdateResponseData>>(){});
     }
 
     @Override
     public void deleteParticipant(String id) {
-        client.delete().uri(baseUri + "/participant/%s".formatted(id)).retrieve();
+        client.delete().uri(baseUri + "/participants/%s".formatted(id)).retrieve();
     }
 
     @Override
-    public ListParticipantData getParticipant(String data) {
-        URI uri = URI.create(baseUri + "/participant");
-        UriBuilder uriBuilder = UriComponentsBuilder.fromUri(uri).queryParam("data", data);
-        return client
-            .get()
-            .uri(uriBuilder.build())
-            .retrieve()
-            .body(ListParticipantData.class);
-    }
-
-    @Override
-    public ListParticipantData getParticipant() {
+    public ParticipantsListRecord getParticipant(String data) {
         URI uri = URI.create(baseUri + "/participant");
         UriBuilder uriBuilder = UriComponentsBuilder.fromUri(uri);
-        return client
-                .get()
-                .uri(uriBuilder.build())
-                .retrieve()
-                .body(ListParticipantData.class);
+        if(!data.isBlank()){
+            uriBuilder.queryParam("date", data);
+        }
+        var send = client
+            .get()
+            .uri(uriBuilder.build()).retrieve();
+
+        return ClientHelper.getReturnedData(
+            send,
+            new ParameterizedTypeReference<ClientHandlerRecord<ParticipantsListRecord>>(){}
+        );
     }
 
     @Override
-    public OneParticipantData getOneParticipant(String id) {
-        return null;
+    public ParticipantsListRecord getParticipant() {
+        URI uri = URI.create(baseUri + "/participant");
+        UriBuilder uriBuilder = UriComponentsBuilder.fromUri(uri);
+        var send = client
+            .get()
+            .uri(uriBuilder.build())
+            .retrieve();
+        return ClientHelper.getReturnedData(
+            send,
+            new ParameterizedTypeReference<ClientHandlerRecord<ParticipantsListRecord>>(){}
+        );
     }
+
 }

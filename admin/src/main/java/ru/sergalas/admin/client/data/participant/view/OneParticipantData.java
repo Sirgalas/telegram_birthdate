@@ -1,11 +1,13 @@
 package ru.sergalas.admin.client.data.participant.view;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import java.util.UUID;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record OneParticipantData(
         @NotBlank(message = "data.participant.not_blank")
         UUID id,

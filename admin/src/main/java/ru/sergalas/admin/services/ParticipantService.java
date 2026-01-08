@@ -1,6 +1,5 @@
 package ru.sergalas.admin.services;
 
-import ru.sergalas.admin.client.data.participant.view.ListParticipantData;
 import ru.sergalas.admin.client.data.participant.view.OneParticipantData;
 import ru.sergalas.admin.entity.Participant;
 
@@ -11,5 +10,4 @@ public interface ParticipantService {
     Participant updateParticipant(Participant participant);
     List<Participant> deleteParticipant(Participant participant);
     List<Participant> getAllParticipants(String data);
-    OneParticipantData getOneParticipant(Participant participant);
 }
