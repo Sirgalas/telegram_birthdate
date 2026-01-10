@@ -8,7 +8,6 @@ import java.util.UUID;
 
 public record Participant(
 
-        @NotBlank(message = "data.participant.not_blank")
         UUID id,
         @NotBlank(message = "data.participant.not_blank")
         String chatId,

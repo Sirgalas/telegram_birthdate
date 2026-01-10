@@ -89,7 +89,7 @@ public class ParticipantView extends VerticalLayout {
 
     private void addParticipant() {
         editParticipant(new Participant(
-                UUID.randomUUID(),
+                null,
                 "", // chatId
                 "", // firstName
                 "", // lastName

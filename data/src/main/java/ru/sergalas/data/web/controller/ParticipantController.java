@@ -14,7 +14,7 @@ import ru.sergalas.data.web.payload.ResponsePayload;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("participant")
+@RequestMapping("participants")
 @RequiredArgsConstructor
 public class ParticipantController {
     private final ParticipantService participantService;
@@ -31,11 +31,16 @@ public class ParticipantController {
         );
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateParticipant(@Valid @RequestBody ParticipantRequestUpdatePayload payload, @PathVariable String id) {
         try{
-            participantService.update(payload, UUID.fromString(id));
-            return ResponseEntity.noContent().build();
+            return new ResponseEntity<>(
+                new ResponsePayload(
+                    HttpStatus.OK.value(),
+                    participantService.update(payload, UUID.fromString(id))
+                ),
+                HttpStatus.OK
+            );
         }catch (ParticipantNotFoundException e) {
             return new ResponseEntity<>(
                 new ResponsePayload(
@@ -46,7 +51,7 @@ public class ParticipantController {
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteParticipant(@PathVariable String id) {
         try {
             participantService.delete(id);
@@ -81,7 +86,7 @@ public class ParticipantController {
         }
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     private ResponseEntity<ResponsePayload> getOne(@PathVariable String id) {
         try{
             return new ResponseEntity<>(

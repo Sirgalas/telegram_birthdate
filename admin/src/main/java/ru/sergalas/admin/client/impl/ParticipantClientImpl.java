@@ -32,7 +32,7 @@ public class ParticipantClientImpl implements ParticipantClient {
     public CreateResponseData createParticipant(CreateRequestData createRequestData) {
         var send =  client
             .post()
-            .uri(baseUri + "/participant")
+            .uri(baseUri + "/participants")
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .body(createRequestData);
@@ -58,12 +58,16 @@ public class ParticipantClientImpl implements ParticipantClient {
 
     @Override
     public void deleteParticipant(String id) {
-        client.delete().uri(baseUri + "/participants/%s".formatted(id)).retrieve();
+        client
+            .delete()
+            .uri(baseUri + "/participants/%s".formatted(id))
+            .retrieve()
+            .toBodilessEntity();
     }
 
     @Override
     public ParticipantsListRecord getParticipant(String data) {
-        URI uri = URI.create(baseUri + "/participant");
+        URI uri = URI.create(baseUri + "/participants");
         UriBuilder uriBuilder = UriComponentsBuilder.fromUri(uri);
         if(!data.isBlank()){
             uriBuilder.queryParam("date", data);
@@ -80,7 +84,7 @@ public class ParticipantClientImpl implements ParticipantClient {
 
     @Override
     public ParticipantsListRecord getParticipant() {
-        URI uri = URI.create(baseUri + "/participant");
+        URI uri = URI.create(baseUri + "/participants");
         UriBuilder uriBuilder = UriComponentsBuilder.fromUri(uri);
         var send = client
             .get()
