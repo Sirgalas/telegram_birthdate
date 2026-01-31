@@ -74,7 +74,8 @@ public class ParticipantClientImpl implements ParticipantClient {
         }
         var send = client
             .get()
-            .uri(uriBuilder.build()).retrieve();
+            .uri(uriBuilder.build())
+            .retrieve();
 
         return ClientHelper.getReturnedData(
             send,

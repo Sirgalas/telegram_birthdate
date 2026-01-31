@@ -21,7 +21,7 @@ public class PeriodicityServiceImpl implements PeriodicityService {
     private final PeriodicityMapper mapper;
 
     @Override
-    public List<Periodicity> getPeriodicity(String data) {
+    public List<Periodicity> getAllPeriodicity(String data) {
         return client.getPeriodicity(data).listPeriodicity().stream().map(mapper::fromOnePeriodicityData).toList();
     }
 

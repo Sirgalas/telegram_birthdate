@@ -7,11 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PeriodicityRequestData {
 
+    UUID id;
     @NotBlank(message = "data.periodicity.not_blank")
     private String chatId;
     @NotBlank(message = "data.periodicity.not_blank")
