@@ -48,12 +48,13 @@ public class PeriodicityServiceImpl implements PeriodicityService {
 
     @Override
     public ListPeriodicityData getToDate(String date) {
+        if(date != null) {
+            return new ListPeriodicityData(
+                periodicityRepository.getPeriodicityByDate(date).stream().map(periodicityMapper::toDate).toList()
+            );
+        }
         return new ListPeriodicityData(
-            periodicityRepository
-            .getPeriodicityByDate(date)
-                .stream()
-                .map(periodicityMapper::toDate)
-                .toList()
+            periodicityRepository.findAll().stream().map(periodicityMapper::toDate).toList()
         );
     }
 

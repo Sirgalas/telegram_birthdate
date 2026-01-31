@@ -14,5 +14,5 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ListPeriodicityData  implements ResponseData {
-    List<PeriodicityResponseData> periodicities;
+    List<PeriodicityResponseData> listPeriodicity;
 }
