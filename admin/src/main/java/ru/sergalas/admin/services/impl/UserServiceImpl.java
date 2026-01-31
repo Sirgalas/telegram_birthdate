@@ -26,4 +26,9 @@ public class UserServiceImpl implements UserService {
     public User getOneUser(String id) {
         return mapper.fromOneInfo(client.getOneUser(id));
     }
+
+    @Override
+    public List<String> getRoles() {
+        return client.getAllRoles().roles();
+    }
 }

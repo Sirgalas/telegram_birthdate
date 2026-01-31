@@ -10,10 +10,7 @@ import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import ru.sergalas.security.data.UserCreateRecord;
-import ru.sergalas.security.data.UserResponseListRecord;
-import ru.sergalas.security.data.UserResponseRecord;
-import ru.sergalas.security.data.UserUpdateRecord;
+import ru.sergalas.security.data.*;
 import ru.sergalas.security.mapper.UserMapper;
 import jakarta.ws.rs.core.Response;
 import org.springframework.http.HttpStatus;
@@ -88,7 +85,9 @@ public class UserServiceImpl implements UserService {
         }
         if(userName!=null && !userName.isBlank()){
             return new UserResponseListRecord(
-                realmResource.users().search(userName,first,count)
+                realmResource
+                    .users()
+                    .search(userName,first,count)
                     .stream()
                     .map(userMapper::fromUserRepresentation)
                     .toList()
@@ -130,5 +129,19 @@ public class UserServiceImpl implements UserService {
             RoleRepresentation adminRole = keycloak.realm(targetRealm).roles().get(role).toRepresentation();
             keycloak.realm(targetRealm).users().get(userId).roles().realmLevel().add(Collections.singletonList(adminRole));
         }
+    }
+
+    public UserRoleResponseRecord getAllRealmRoles() {
+        return new UserRoleResponseRecord(keycloak.realm(targetRealm)
+                .roles()
+                .list()
+                .stream()
+                .map(RoleRepresentation::getName)
+                .toList()
+        );
+    }
+
+    public void deleteUser(String userId) {
+        keycloak.realm(targetRealm).users().get(userId).remove();
     }
 }

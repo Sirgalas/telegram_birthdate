@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 public record User(
         String id,
         @NotBlank(message = "Username is required")
@@ -15,6 +17,6 @@ public record User(
         @NotBlank(message = "Password is required")
         @Size(min = 6, message = "Password must be at  least 6 charaster")
         String password,
-        String role
+        List<String> role
 ) {
 }

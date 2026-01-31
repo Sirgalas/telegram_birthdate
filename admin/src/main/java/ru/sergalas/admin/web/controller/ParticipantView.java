@@ -121,7 +121,6 @@ public class ParticipantView extends VerticalLayout {
         HorizontalLayout buttons = new HorizontalLayout();
         Button saveButton = new Button("Сохранить", e -> {
             try {
-                // Собираем данные из формы в новый record
                 Participant updatedParticipant = new Participant(
                         participant.id(), // оставляем старый ID
                         chatId.getValue(),

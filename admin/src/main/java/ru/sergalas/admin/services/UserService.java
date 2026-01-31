@@ -9,4 +9,5 @@ import java.util.List;
 public interface UserService {
     public List<User> getIndex(String userName, Integer first, Integer count);
     User getOneUser(String id);
+    List<String> getRoles();
 }

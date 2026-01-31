@@ -13,18 +13,24 @@ import ru.sergalas.security.web.payload.ResponsePayload;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/register")
+@RequestMapping("/registry")
 public class RegisterController {
     private final UserService userService;
 
-    @PostMapping("create")
+    @PostMapping
     public ResponseEntity<ResponsePayload> createUser(@Valid @RequestBody UserCreateRecord userCreateRecord) {
          return ControllerHelper.isSuccess(HttpStatus.OK, userService.createUser(userCreateRecord));
     }
 
-    @PostMapping("update/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<ResponsePayload> updateUser(@PathVariable String id,  @Valid @RequestBody UserUpdateRecord userUpdateRecord) {
         return ControllerHelper.isSuccess(HttpStatus.OK,userService.updateUser(id, userUpdateRecord));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<ResponsePayload> deleteUser(@PathVariable String id) {
+        userService.deleteUser(id);
+        return ControllerHelper.isOk();
     }
 }
 

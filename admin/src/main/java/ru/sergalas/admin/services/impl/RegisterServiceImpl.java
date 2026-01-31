@@ -28,4 +28,9 @@ public class RegisterServiceImpl implements RegisterService {
         UpdateRequestData data = mapper.toUpdateRequest(user);
         return mapper.fromUpdateResponse(client.update(data,user.id()));
     }
+
+    @Override
+    public void delete(String id) {
+        client.delete(id);
+    }
 }

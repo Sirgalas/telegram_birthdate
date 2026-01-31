@@ -32,4 +32,9 @@ public class UserController {
             return ControllerHelper.isError(HttpStatus.NOT_FOUND,e.getMessage());
         }
     }
+
+    @GetMapping("roles")
+    public ResponseEntity<ResponsePayload> roles() {
+        return ControllerHelper.isSuccess(HttpStatus.OK,userService.getAllRealmRoles());
+    }
 }
