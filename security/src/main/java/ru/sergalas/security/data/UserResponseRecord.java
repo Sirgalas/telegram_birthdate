@@ -15,6 +15,4 @@ public record UserResponseRecord(
         Long createdTimestamp,
         Map<String, List<String>> attributes,
         List<String> realmRoles
-) implements ResponseData {
-
-}
+) implements ResponseData {}

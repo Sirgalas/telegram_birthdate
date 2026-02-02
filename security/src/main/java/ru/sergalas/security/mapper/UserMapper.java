@@ -20,7 +20,7 @@ public interface UserMapper {
 
 
     @Mapping(target = "enabled", constant = "true")
-    @Mapping(target = "realmRoles", source = "role", qualifiedByName = "mapRoleToList")
+    @Mapping(target = "realmRoles", source = "role")
     UserRepresentation toUserRepresentation(UserCreateRecord userCreateRecord);
 
     UserResponseRecord fromUserRepresentation(UserRepresentation userRepresentation);

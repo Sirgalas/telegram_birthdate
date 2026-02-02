@@ -130,12 +130,13 @@ public class UserView extends VerticalLayout {
         password.setValue(user.password() != null ? user.password() : "");
         List<String> roles = userService.getRoles();
         role.setItems(roles);
+        if (user.role() != null && !user.role().isEmpty()) {
+            user.role().forEach(role::setValue);
+        }
+
 
         form.add(id, username, email, firstName, lastName, password, role);
-
         id.setReadOnly(user.id() != null);
-
-
 
         HorizontalLayout buttons = new HorizontalLayout();
         Button saveButton = new Button("Сохранить", e -> {
@@ -146,7 +147,6 @@ public class UserView extends VerticalLayout {
                     updatedRoles.add(selectedRole);
                 }
 
-                // Собираем данные из формы в новый record
                 User updatedUser = new User(
                         id.getValue(),
                         username.getValue(),

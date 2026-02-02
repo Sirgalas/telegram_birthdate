@@ -41,7 +41,11 @@ public class UserServiceImpl implements UserService {
             Response response = keycloak.realm(targetRealm).users().create(user);
             if (response.getStatus() == 201) {
                 String createdUserId = getCreatedUserId(response);
-                addRoleToUser(createdUserId, createRecord.role());
+                /*if(createRecord.role() != null &&  ! createRecord.role().isEmpty()) {
+                    for (String role : createRecord.role())  {
+                        addRoleToUser(createdUserId, role);
+                    }
+                }*/
                 String userId = CreatedResponseUtil.getCreatedId(response);
                 return  userMapper.fromUserRepresentation(keycloak.realm(targetRealm).users().get(userId).toRepresentation());
             } else {
