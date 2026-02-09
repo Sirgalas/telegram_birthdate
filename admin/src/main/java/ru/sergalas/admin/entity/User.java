@@ -17,6 +17,6 @@ public record User(
         @NotBlank(message = "Password is required")
         @Size(min = 6, message = "Password must be at  least 6 charaster")
         String password,
-        List<String> role
+        List<String> roles
 ) {
 }

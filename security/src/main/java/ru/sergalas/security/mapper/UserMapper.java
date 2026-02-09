@@ -25,6 +25,9 @@ public interface UserMapper {
 
     UserResponseRecord fromUserRepresentation(UserRepresentation userRepresentation);
 
+    @Mapping(target = "roles", source = "roles")
+    UserResponseRecord fromUserRepresentationWithRole(UserRepresentation userRepresentation, List<String> roles);
+
     @Mapping(target = "realmRoles",source = "role", qualifiedByName = "mapRoleToList")
     void updateUserRepresentation(UserUpdateRecord updateRecord, @MappingTarget UserRepresentation userRepresentation);
 

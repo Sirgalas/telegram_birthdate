@@ -14,5 +14,5 @@ public record UserResponseRecord(
         Boolean enabled,
         Long createdTimestamp,
         Map<String, List<String>> attributes,
-        List<String> realmRoles
+        List<String> roles
 ) implements ResponseData {}

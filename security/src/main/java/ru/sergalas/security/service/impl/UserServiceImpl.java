@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
         }
 
         userMapper.updateUserRepresentation(userUpdateRecord, existingUser);
-        if(userUpdateRecord.password() != null){
+        if(!userUpdateRecord.password().isEmpty()){
             CredentialRepresentation credential = createCredentialRepresentation(userUpdateRecord.password());
             keycloak.realm(targetRealm).users().get(userId).resetPassword(credential);
         }
@@ -87,23 +88,25 @@ public class UserServiceImpl implements UserService {
         if(count == null){
             count = -1;
         }
+        List<UserRepresentation> users;
         if(userName!=null && !userName.isBlank()){
-            return new UserResponseListRecord(
-                realmResource
-                    .users()
-                    .search(userName,first,count)
-                    .stream()
-                    .map(userMapper::fromUserRepresentation)
-                    .toList()
-            );
+            users = realmResource.users().search(userName,first,count);
+        } else {
+            users = realmResource.users()
+                    .list(first,count);
         }
-        return new UserResponseListRecord(
-            realmResource.users()
-                .list(first,count)
-                .stream()
-                .map(userMapper::fromUserRepresentation)
-                .toList()
-        );
+        List<UserResponseRecord> result =  users.stream().map(userRepresentation -> {
+            UserResource userResource = realmResource.users().get(userRepresentation.getId());
+            UserRepresentation fullUser = userResource.toRepresentation();
+
+            List<String> userRoles = userResource.roles().realmLevel().listAll()
+                    .stream()
+                    .map(RoleRepresentation::getName)
+                    .toList();
+
+            return userMapper.fromUserRepresentationWithRole(fullUser,userRoles);
+        }).toList();
+        return new UserResponseListRecord(result);
     }
 
     public UserResponseRecord getUser(String userId) {

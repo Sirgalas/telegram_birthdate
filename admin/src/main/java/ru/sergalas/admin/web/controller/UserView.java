@@ -14,7 +14,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import lombok.RequiredArgsConstructor;
-import ru.sergalas.admin.entity.Periodicity;
 import ru.sergalas.admin.entity.User;
 import ru.sergalas.admin.services.RegisterService;
 import ru.sergalas.admin.services.UserService;
@@ -77,7 +76,7 @@ public class UserView extends VerticalLayout {
         grid.addColumn(User::firstName).setHeader("Имя").setAutoWidth(true);
         grid.addColumn(User::lastName).setHeader("Фамилия").setAutoWidth(true);
         grid.addColumn(User::password).setHeader("Пароль").setAutoWidth(true);
-        grid.addColumn(User::role).setHeader("Роли ").setAutoWidth(true);
+        grid.addColumn(User::roles).setHeader("Роли ").setAutoWidth(true);
 
 
         grid.addComponentColumn(user -> {
@@ -130,8 +129,8 @@ public class UserView extends VerticalLayout {
         password.setValue(user.password() != null ? user.password() : "");
         List<String> roles = userService.getRoles();
         role.setItems(roles);
-        if (user.role() != null && !user.role().isEmpty()) {
-            user.role().forEach(role::setValue);
+        if (user.roles() != null && !user.roles().isEmpty()) {
+            user.roles().forEach(role::setValue);
         }
 
 
@@ -142,7 +141,7 @@ public class UserView extends VerticalLayout {
         Button saveButton = new Button("Сохранить", e -> {
             try {
                 String selectedRole = role.getValue();
-                List<String> updatedRoles = new ArrayList<>(user.role());
+                List<String> updatedRoles = new ArrayList<>(user.roles());
                 if (selectedRole != null && !selectedRole.isEmpty() && !updatedRoles.contains(selectedRole)) {
                     updatedRoles.add(selectedRole);
                 }
