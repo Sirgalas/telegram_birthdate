@@ -23,6 +23,7 @@ public class Participant {
     private String firstName;
     private String lastName;
     private String patronymic;
+    private String phone;
 
     @ManyToOne
     @JoinColumn(
@@ -33,4 +34,8 @@ public class Participant {
         )
     )
     DatePeriodicity datePeriodicity;
+
+    public String getFullName() {
+        return "%s %s %s".formatted(firstName, lastName, patronymic);
+    }
 }

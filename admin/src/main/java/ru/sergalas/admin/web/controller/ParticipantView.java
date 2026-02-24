@@ -70,7 +70,7 @@ public class ParticipantView extends VerticalLayout {
         grid.addColumn(Participant::lastName).setHeader("Фамилия").setAutoWidth(true);
         grid.addColumn(Participant::patronymic).setHeader("Отчество").setAutoWidth(true);
         grid.addColumn(Participant::date).setHeader("Дата").setAutoWidth(true);
-
+        grid.addColumn(Participant::phone).setHeader("Телефон").setAutoWidth(true);
         grid.addComponentColumn(participant -> {
             Button deleteBtn = new Button("Удалить");
             deleteBtn.addClickListener(e -> deleteParticipant(participant));
@@ -94,7 +94,8 @@ public class ParticipantView extends VerticalLayout {
                 "", // firstName
                 "", // lastName
                 "", // patronymic
-                ""  // date
+                "",  // date
+                ""
         ));
     }
 
@@ -108,6 +109,7 @@ public class ParticipantView extends VerticalLayout {
         TextField lastName = new TextField("Фамилия");
         TextField patronymic = new TextField("Отчество");
         TextField date = new TextField("Дата (ДД.ММ)");
+        TextField phone =  new TextField("Телефон");
 
         // Заполняем поля из record
         chatId.setValue(participant.chatId());
@@ -115,6 +117,9 @@ public class ParticipantView extends VerticalLayout {
         lastName.setValue(participant.lastName());
         patronymic.setValue(participant.patronymic());
         date.setValue(participant.date());
+        phone.setValue(participant.phone());
+        phone.setReadOnly(true);
+        phone.setEnabled(false);
 
         form.add(chatId, firstName, lastName, patronymic, date);
 
@@ -127,7 +132,8 @@ public class ParticipantView extends VerticalLayout {
                         firstName.getValue(),
                         lastName.getValue(),
                         patronymic.getValue(),
-                        date.getValue()
+                        date.getValue(),
+                        phone.getValue()
                 );
 
                 if (participant.id() == null) {

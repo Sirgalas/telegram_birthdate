@@ -7,6 +7,8 @@ import ru.sergalas.data.entities.participant.data.ParticipantResponsePayload;
 import ru.sergalas.data.entities.participant.entity.Participant;
 import ru.sergalas.data.entities.participant.exception.ParticipantNotFoundException;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public interface ParticipantService {
@@ -20,4 +22,6 @@ public interface ParticipantService {
     public ListResponsePayload getByDate(String date);
 
     public ParticipantResponsePayload getById(String id) throws ParticipantNotFoundException;
+
+    public List<Participant> getByLocalDate(LocalDate date);
 }

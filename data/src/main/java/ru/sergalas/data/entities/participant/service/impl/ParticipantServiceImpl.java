@@ -15,6 +15,9 @@ import ru.sergalas.data.entities.participant.mapper.ParticipantMapper;
 import ru.sergalas.data.entities.participant.repository.ParticipantRepository;
 import ru.sergalas.data.entities.participant.service.ParticipantService;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -66,6 +69,14 @@ public class ParticipantServiceImpl implements ParticipantService {
         return participantRepository.findById(UUID.fromString(id)).map(mapper::toData).orElseThrow(() -> new ParticipantNotFoundException("{participant.not_found}"));
     }
 
+    @Override
+    public List<Participant> getByLocalDate(LocalDate localDate) {
+
+        return participantRepository.getParticipantByDate(
+                localDate.atStartOfDay().format(DateTimeFormatter.ofPattern(DatePeriodicity.DATE_FORMAT))
+        );
+    }
+
     private DatePeriodicity getDatePeriodicity(String date) {
         Optional<DatePeriodicity> dateFind = dateRepository.findByDate(date);
         if(dateFind.isPresent()) {
@@ -76,4 +87,6 @@ public class ParticipantServiceImpl implements ParticipantService {
             return dateNew;
         }
     }
+
+
 }

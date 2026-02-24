@@ -2,6 +2,7 @@ package ru.sergalas.data.entities.periodicity.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.sergalas.data.entities.date.entity.DatePeriodicity;
 import ru.sergalas.data.entities.date.service.DatePeriodicityService;
 import ru.sergalas.data.entities.participant.exception.ParticipantNotFoundException;
 import ru.sergalas.data.entities.periodicity.data.ListPeriodicityData;
@@ -12,6 +13,9 @@ import ru.sergalas.data.entities.periodicity.mapper.PeriodicityMapper;
 import ru.sergalas.data.entities.periodicity.repository.PeriodicityRepository;
 import ru.sergalas.data.entities.periodicity.service.PeriodicityService;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -65,5 +69,13 @@ public class PeriodicityServiceImpl implements PeriodicityService {
                 .map(periodicityMapper::toDate)
                 .orElseThrow(() -> new ParticipantNotFoundException("{periodicity.error.not_found}") );
 
+    }
+
+    @Override
+    public List<Periodicity> getByDate(LocalDate localDate) {
+
+        return periodicityRepository.getPeriodicityByDate(
+                localDate.atStartOfDay().format(DateTimeFormatter.ofPattern(DatePeriodicity.DATE_FORMAT))
+        );
     }
 }

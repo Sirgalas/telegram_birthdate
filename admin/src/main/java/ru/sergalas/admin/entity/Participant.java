@@ -20,6 +20,7 @@ public record Participant(
         String patronymic,
         @Size(min = 5, max = 5,message = "{date.size.error}")
         @Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])\\.(0[1-9]|1[0-2])$", message = "{date_periodicity.pattern.error}")
-        String date
+        String date,
+        String phone
 ) {
 }

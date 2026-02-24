@@ -19,6 +19,8 @@ import java.util.UUID;
 @Table(name = "date_periodicity")
 public class DatePeriodicity {
 
+    public static String DATE_FORMAT= "dd.MM";
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
