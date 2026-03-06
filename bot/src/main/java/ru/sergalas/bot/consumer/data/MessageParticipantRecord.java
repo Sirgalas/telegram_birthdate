@@ -1,4 +1,4 @@
 package ru.sergalas.bot.consumer.data;
 
-public record MessageParticipantRecord(String message) {
+public record MessageParticipantRecord(String message, String chatId) {
 }

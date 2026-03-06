@@ -37,7 +37,13 @@ public class SenderScheduler {
             try {
                 producer.send(
                     participantTopic,
-                    objectMapper.writeValueAsString(new MessageParticipantRecord( "Поздравляем %s".formatted(fullName))));
+                    objectMapper.writeValueAsString(
+                        new MessageParticipantRecord(
+                            "Поздравляем %s".formatted(fullName),
+                            participant.getChatId()
+                        )
+                    )
+                );
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
@@ -52,7 +58,13 @@ public class SenderScheduler {
             try {
                 producer.send(
                     periodicityTopic,
-                    objectMapper.writeValueAsString(new MessagePeriodicityRecord(periodicity.getDescription(),periodicity.getTitle()))
+                    objectMapper.writeValueAsString(
+                        new MessagePeriodicityRecord(
+                            periodicity.getDescription(),
+                            periodicity.getTitle(),
+                            periodicity.getChatId()
+                        )
+                    )
                 );
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);

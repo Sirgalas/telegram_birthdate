@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import ru.sergalas.bot.bot.services.MessageEventService;
 import ru.sergalas.bot.consumer.Consumer;
-import ru.sergalas.bot.consumer.data.MessageParticipantRecord;
 import ru.sergalas.bot.consumer.data.MessagePeriodicityRecord;
 
 @RequiredArgsConstructor
@@ -16,11 +16,17 @@ import ru.sergalas.bot.consumer.data.MessagePeriodicityRecord;
 public class PeriodicityConsumer implements Consumer {
 
     private final ObjectMapper objectMapper;
+    private final MessageEventService messageEventService;
 
     @KafkaListener(topics = "${app.kafka.periodicity.topic}", groupId = "${app.kafka.group}")
     @Override
     public void consume(String message) throws JsonProcessingException {
         MessagePeriodicityRecord messageRecord = objectMapper.readValue(message, MessagePeriodicityRecord.class);
         log.debug("messageRecord: {}", messageRecord);
+        messageEventService.send(
+            Long.valueOf(messageRecord.chatId()),
+            messageRecord.title() + messageRecord.description(),
+            this
+        );
     }
 }

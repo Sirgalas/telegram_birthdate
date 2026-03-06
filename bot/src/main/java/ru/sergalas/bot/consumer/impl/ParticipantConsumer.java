@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import ru.sergalas.bot.bot.services.MessageEventService;
 import ru.sergalas.bot.consumer.data.MessageParticipantRecord;
 
 @RequiredArgsConstructor
@@ -14,10 +15,12 @@ import ru.sergalas.bot.consumer.data.MessageParticipantRecord;
 public class ParticipantConsumer {
 
     private final ObjectMapper objectMapper;
+    private final MessageEventService messageEventService;
 
     @KafkaListener(topics = "${app.kafka.participant.topic}", groupId = "${app.kafka.group}")
     public void consume(String message) throws JsonProcessingException {
         MessageParticipantRecord messageRecord = objectMapper.readValue(message, MessageParticipantRecord.class);
         log.debug("messageRecord: {}", messageRecord);
+        messageEventService.send(Long.valueOf(messageRecord.chatId()),messageRecord.message(),this);
     }
 }
